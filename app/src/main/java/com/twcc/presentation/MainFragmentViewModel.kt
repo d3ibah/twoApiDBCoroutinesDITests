@@ -8,6 +8,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
 import com.twcc.data.repository.UserRepositoryImpl
+import com.twcc.data.storage.UserDbStorageImpl
 import com.twcc.data.storage.UserNetworkStorageImpl
 import com.twcc.domain.models.UserDomain
 import com.twcc.domain.usecase.GetUsersUseCase
@@ -35,7 +36,7 @@ class MainFragmentViewModel(private val getDataUseCase: GetUsersUseCase) : ViewM
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val repository by lazy {
-                    UserRepositoryImpl(UserNetworkStorageImpl())
+                    UserRepositoryImpl(UserNetworkStorageImpl(), UserDbStorageImpl())
                 }
                 val getDataUseCase by lazy { GetUsersUseCase(repository) }
 
