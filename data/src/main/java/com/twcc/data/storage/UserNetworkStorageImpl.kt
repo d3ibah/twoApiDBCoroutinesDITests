@@ -6,7 +6,7 @@ import com.twcc.data.api.GitHubApi
 import com.twcc.data.api.GitHubUserResponse
 import com.twcc.domain.models.UserDomain
 
-class StorageImpl : Storage {
+class UserNetworkStorageImpl : UserNetworkStorage {
 
     companion object {
         private const val DEFAULT_STRING_VALUE = ""

@@ -1,8 +1,8 @@
-package com.twcc.data.storage
+package com.twcc.domain.repository
 
 import com.twcc.domain.models.UserDomain
 
-interface Storage {
+interface UserRepository {
 
     suspend fun getUsers(): List<UserDomain>
 }

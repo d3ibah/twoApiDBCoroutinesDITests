@@ -7,8 +7,8 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
-import com.twcc.data.repository.RepositoryImpl
-import com.twcc.data.storage.StorageImpl
+import com.twcc.data.repository.UserRepositoryImpl
+import com.twcc.data.storage.UserNetworkStorageImpl
 import com.twcc.domain.models.UserDomain
 import com.twcc.domain.usecase.GetUsersUseCase
 import kotlinx.coroutines.Dispatchers
@@ -35,7 +35,7 @@ class MainFragmentViewModel(private val getDataUseCase: GetUsersUseCase) : ViewM
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
                 val repository by lazy {
-                    RepositoryImpl(StorageImpl())
+                    UserRepositoryImpl(UserNetworkStorageImpl())
                 }
                 val getDataUseCase by lazy { GetUsersUseCase(repository) }
 
