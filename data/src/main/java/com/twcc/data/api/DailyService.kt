@@ -5,5 +5,5 @@ import retrofit2.http.GET
 interface DailyService {
 
     @GET("users")
-    suspend fun getUsers(): DailyUser
+    suspend fun getUsers(): DailyUserResponse
 }
