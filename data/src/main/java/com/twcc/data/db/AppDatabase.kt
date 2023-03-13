@@ -11,11 +11,17 @@ abstract class AppDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
 }
 
-object Database {
-    //    TODO: fix it
-    fun getDb(context: Context) =
+class AppDatabaseImpl(private val context: Context) {
+
+    companion object {
+        private const val DB_NAME = "user_database"
+    }
+
+    val instance by lazy { getDbInstance() }
+    private fun getDbInstance() =
         Room.databaseBuilder(
             context,
-            AppDatabase::class.java, "database-name"
+            AppDatabase::class.java,
+            DB_NAME
         ).build()
 }

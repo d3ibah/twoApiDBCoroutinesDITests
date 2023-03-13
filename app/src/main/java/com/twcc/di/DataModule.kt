@@ -1,7 +1,7 @@
 package com.twcc.di
 
 import com.twcc.data.db.AppDatabase
-import com.twcc.data.db.Database
+import com.twcc.data.db.AppDatabaseImpl
 import com.twcc.data.repository.UserRepositoryImpl
 import com.twcc.data.storage.UserDbStorage
 import com.twcc.data.storage.UserDbStorageImpl
@@ -14,7 +14,7 @@ import org.koin.dsl.module
 val dataModule = module {
 
     single<AppDatabase> {
-        Database.getDb(context = get())
+        AppDatabaseImpl(context = get()).instance
     }
 
     single<UserDbStorage> {
