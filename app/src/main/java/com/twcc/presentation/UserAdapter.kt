@@ -13,13 +13,13 @@ import com.twcc.domain.models.UserDomain
 class UserAdapter(
     private val onItemClick: (UserDomain) -> Unit
 ) : RecyclerView.Adapter<UserViewHolder>() {
+
     private var users: List<UserDomain> = emptyList()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
         val binding = UserItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return UserViewHolder(binding, onItemClick)
     }
-
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bindData(users[position])

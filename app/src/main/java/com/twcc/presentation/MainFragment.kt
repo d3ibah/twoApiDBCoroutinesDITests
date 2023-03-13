@@ -48,9 +48,7 @@ class MainFragment : Fragment() {
 
     private fun initOnItemClick(user: UserDomain) {
         viewModel.onItemClicked(user)
-//        TODO: Remove it. Move logic to VM
-        val temp = User(user.id, user.name, user.api, user.image)
-        val action = MainFragmentDirections.actionMainFragmentToSecondFragment(temp, 1)
+        val action = MainFragmentDirections.actionMainFragmentToSecondFragment(user = user)
         findNavController().navigate(action)
     }
 }

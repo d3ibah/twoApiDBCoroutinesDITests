@@ -21,9 +21,6 @@
         tools:layout="@layout/fragment_detail">
         <argument
             android:name="user"
-            app:argType="com.twcc.presentation.User" />
-        <argument
-            android:name="count"
-            app:argType="integer" />
+            app:argType="com.twcc.domain.models.UserDomain" />
     </fragment>
 </navigation>
