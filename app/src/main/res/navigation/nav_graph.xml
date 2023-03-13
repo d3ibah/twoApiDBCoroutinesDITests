@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.twcc.presentation.MainFragment"
+        android:name="com.twcc.presentation.screens.main.MainFragment"
         android:label="fragment_main"
         tools:layout="@layout/fragment_main">
         <action
@@ -16,7 +16,7 @@
     </fragment>
     <fragment
         android:id="@+id/secondFragment"
-        android:name="com.twcc.presentation.DetailFragment"
+        android:name="com.twcc.presentation.screens.detail.DetailFragment"
         android:label="fragment_second"
         tools:layout="@layout/fragment_detail">
         <argument

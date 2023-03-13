@@ -1,4 +1,4 @@
-package com.twcc.presentation
+package com.twcc.presentation.screens.detail
 
 import android.os.Bundle
 import android.view.LayoutInflater
