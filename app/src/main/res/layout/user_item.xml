@@ -6,8 +6,6 @@
         android:id="@+id/itemContainer"
         android:layout_width="match_parent"
         android:layout_height="104dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginBottom="10dp"
         android:gravity="center_vertical"
         android:orientation="vertical">
 
@@ -26,7 +24,7 @@
             android:layout_height="52dp"
             android:layout_gravity="center"
             android:layout_marginHorizontal="20dp"
-            android:visibility="gone"
+            android:contentDescription="@string/user_avatar"
             tools:src="@tools:sample/avatars"
             tools:visibility="visible" />
 
