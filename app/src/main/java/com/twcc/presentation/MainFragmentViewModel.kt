@@ -4,9 +4,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.ViewModelProvider.AndroidViewModelFactory.Companion.APPLICATION_KEY
 import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.initializer
 import androidx.lifecycle.viewmodel.viewModelFactory
+import com.twcc.data.db.Database
 import com.twcc.data.repository.UserRepositoryImpl
 import com.twcc.data.storage.UserDbStorageImpl
 import com.twcc.data.storage.UserNetworkStorageImpl
@@ -35,8 +37,15 @@ class MainFragmentViewModel(private val getDataUseCase: GetUsersUseCase) : ViewM
     companion object {
         val Factory: ViewModelProvider.Factory = viewModelFactory {
             initializer {
+                val application = checkNotNull(this[APPLICATION_KEY]) as TwApp
                 val repository by lazy {
-                    UserRepositoryImpl(UserNetworkStorageImpl(), UserDbStorageImpl())
+                    UserRepositoryImpl(
+                        UserNetworkStorageImpl(), UserDbStorageImpl(
+                            Database.getDb(
+                                application
+                            )
+                        )
+                    )
                 }
                 val getDataUseCase by lazy { GetUsersUseCase(repository) }
 

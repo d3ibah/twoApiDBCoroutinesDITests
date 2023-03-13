@@ -16,7 +16,14 @@
     </fragment>
     <fragment
         android:id="@+id/secondFragment"
-        android:name="com.twcc.presentation.SecondFragment"
+        android:name="com.twcc.presentation.DetailFragment"
         android:label="fragment_second"
-        tools:layout="@layout/fragment_second" />
+        tools:layout="@layout/fragment_detail">
+        <argument
+            android:name="user"
+            app:argType="com.twcc.presentation.User" />
+        <argument
+            android:name="count"
+            app:argType="integer" />
+    </fragment>
 </navigation>

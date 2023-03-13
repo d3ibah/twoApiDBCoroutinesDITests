@@ -4,12 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.twcc.R
 import com.twcc.databinding.FragmentMainBinding
 import com.twcc.domain.models.UserDomain
 
@@ -49,8 +47,11 @@ class MainFragment : Fragment() {
     }
 
     private fun initOnItemClick(user: UserDomain) {
-        Toast.makeText(requireContext(), "User $user clicked", Toast.LENGTH_SHORT).show()
         viewModel.onItemClicked(user)
-        findNavController().navigate(R.id.secondFragment)
+//        TODO: Remove it. Move logic to VM
+        val temp = User(user.id, user.name, user.api, user.image)
+        val action = MainFragmentDirections.actionMainFragmentToSecondFragment(temp, 1)
+        findNavController().navigate(action)
     }
 }
+
