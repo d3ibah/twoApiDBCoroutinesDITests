@@ -5,15 +5,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.twcc.databinding.FragmentMainBinding
 import com.twcc.domain.models.UserDomain
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
 
-    private val viewModel: MainFragmentViewModel by viewModels { MainFragmentViewModel.Factory }
+    private val viewModel by viewModel<MainFragmentViewModel>()
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val onItemClick: (UserDomain) -> Unit = {
