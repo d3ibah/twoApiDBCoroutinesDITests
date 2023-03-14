@@ -48,7 +48,7 @@ class MainFragment : Fragment() {
 
     private fun initOnItemClick(user: UserDomain) {
         viewModel.onItemClicked(user)
-        val action = MainFragmentDirections.actionMainFragmentToSecondFragment(user = user)
+        val action = MainFragmentDirections.actionMainFragmentToDetailFragment(user = user)
         findNavController().navigate(action)
     }
 }
