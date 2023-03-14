@@ -1,26 +1,25 @@
-package com.twcc.presentation
+package com.twcc.presentation.screens.main
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
+import com.bumptech.glide.Glide
 import com.twcc.R
+import com.twcc.databinding.UserItemBinding
 import com.twcc.domain.models.UserDomain
 
 class UserAdapter(
     private val onItemClick: (UserDomain) -> Unit
 ) : RecyclerView.Adapter<UserViewHolder>() {
+
     private var users: List<UserDomain> = emptyList()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder =
-        LayoutInflater.from(parent.context).inflate(R.layout.user_item, parent, false)
-            .let { UserViewHolder(it, onItemClick) }
-
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): UserViewHolder {
+        val binding = UserItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        return UserViewHolder(binding, onItemClick)
+    }
 
     override fun onBindViewHolder(holder: UserViewHolder, position: Int) {
         holder.bindData(users[position])
@@ -37,18 +36,25 @@ class UserAdapter(
 }
 
 
-class UserViewHolder(view: View, private val onItemClick: (UserDomain) -> Unit) :
-    ViewHolder(view) {
-    private var itemContainer = itemView.findViewById<LinearLayout>(R.id.itemContainer)
-    private var userNameTV = itemView.findViewById<TextView>(R.id.user_name)
-    private var userApiTV = itemView.findViewById<TextView>(R.id.user_api)
-    private var avatarIV = itemView.findViewById<ImageView>(R.id.user_avatar)
+class UserViewHolder(
+    private val binding: UserItemBinding,
+    private val onItemClick: (UserDomain) -> Unit
+) :
+    ViewHolder(binding.root) {
     fun bindData(item: UserDomain) {
-        userNameTV.text = item.name
-        userApiTV.text = item.api
-//        avatarIV
-        itemContainer.setOnClickListener {
-            onItemClick.invoke(item)
+        with(binding) {
+            userName.text = item.name
+            userApi.text = item.api
+
+            Glide.with(itemView)
+                .load(item.image)
+                .fitCenter()
+                .placeholder(R.drawable.ic_launcher_foreground)
+                .into(userAvatar)
+
+            itemContainer.setOnClickListener {
+                onItemClick.invoke(item)
+            }
         }
     }
 }

@@ -7,18 +7,20 @@ import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object GitHubApi {
+class RetrofitApi<T>(private val baseUrl: String, private val serviceClass: Class<T>) {
 
-    val retrofit = createRetrofit().create(GitHubService::class.java)
+    companion object {
+        const val DAILY_BASE_URL = "https://api.dailymotion.com/"
+        const val GITHUB_BASE_URL = "https://api.github.com/"
+    }
 
-    private const val BASE_URL = "https://api.github.com/"
-
-    private fun createRetrofit(): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(BASE_URL)
+    fun service(): T {
+        val retrofit = Retrofit.Builder()
+            .baseUrl(baseUrl)
             .client(getClient())
             .addConverterFactory(getGsonConverter())
             .build()
+        return retrofit.create(serviceClass)
     }
 
     private fun getClient(): OkHttpClient {

@@ -1,21 +1,19 @@
-package com.twcc.presentation
+package com.twcc.presentation.screens.main
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.twcc.R
 import com.twcc.databinding.FragmentMainBinding
 import com.twcc.domain.models.UserDomain
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainFragment : Fragment() {
 
-    private val viewModel: MainFragmentViewModel by viewModels { MainFragmentViewModel.Factory }
+    private val viewModel by viewModel<MainFragmentViewModel>()
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val onItemClick: (UserDomain) -> Unit = {
@@ -49,8 +47,9 @@ class MainFragment : Fragment() {
     }
 
     private fun initOnItemClick(user: UserDomain) {
-        Toast.makeText(requireContext(), "User $user clicked", Toast.LENGTH_SHORT).show()
         viewModel.onItemClicked(user)
-        findNavController().navigate(R.id.secondFragment)
+        val action = MainFragmentDirections.actionMainFragmentToDetailFragment(user = user)
+        findNavController().navigate(action)
     }
 }
+
