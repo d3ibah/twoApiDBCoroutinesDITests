@@ -1,11 +1,13 @@
 package com.twcc.data.storage
 
+import android.util.Log
 import com.twcc.data.api.DailyService
 import com.twcc.data.api.DailyUser
 import com.twcc.data.api.GitHubService
 import com.twcc.data.api.GitHubUserResponse
 import com.twcc.data.api.RetrofitApi
 import com.twcc.domain.models.UserDomain
+import java.util.concurrent.CancellationException
 
 class UserNetworkStorageImpl(
     private val gitHubApi: RetrofitApi<GitHubService>,
@@ -20,8 +22,25 @@ class UserNetworkStorageImpl(
 
     override suspend fun getUsers(): List<UserDomain> {
         val users = mutableListOf<UserDomain>()
-        users.addAll(gitHubApi.service().getUsers().mapGitHubUserResponseToUserDomainList())
-        users.addAll(dailyApi.service().getUsers().list.mapDailyUsersToUserDomainList())
+
+        try {
+            users.addAll(gitHubApi.service().getUsers().mapGitHubUserResponseToUserDomainList())
+        } catch (e: CancellationException) {
+            Log.e("gitHubApi CancellationException", e.localizedMessage ?: "")
+            throw e
+        } catch (e: Exception) {
+            Log.e("gitHubApi exception", e.localizedMessage ?: "")
+        }
+
+        try {
+            users.addAll(dailyApi.service().getUsers().list.mapDailyUsersToUserDomainList())
+        } catch (e: CancellationException) {
+            Log.e("dailyApi CancellationException", e.localizedMessage ?: "")
+            throw e
+        } catch (e: Exception) {
+            Log.e("dailyApi exception", e.localizedMessage ?: "")
+        }
+
         return users
     }
 
