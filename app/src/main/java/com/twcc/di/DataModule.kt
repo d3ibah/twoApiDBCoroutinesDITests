@@ -1,5 +1,10 @@
 package com.twcc.di
 
+import com.twcc.data.api.DailyService
+import com.twcc.data.api.GitHubService
+import com.twcc.data.api.RetrofitApi
+import com.twcc.data.api.RetrofitApi.Companion.DAILY_BASE_URL
+import com.twcc.data.api.RetrofitApi.Companion.GITHUB_BASE_URL
 import com.twcc.data.db.AppDatabase
 import com.twcc.data.db.AppDatabaseImpl
 import com.twcc.data.repository.UserRepositoryImpl
@@ -8,7 +13,6 @@ import com.twcc.data.storage.UserDbStorageImpl
 import com.twcc.data.storage.UserNetworkStorage
 import com.twcc.data.storage.UserNetworkStorageImpl
 import com.twcc.domain.repository.UserRepository
-import com.twcc.domain.usecase.GetUsersUseCase
 import org.koin.dsl.module
 
 val dataModule = module {
@@ -22,7 +26,10 @@ val dataModule = module {
     }
 
     single<UserNetworkStorage> {
-        UserNetworkStorageImpl()
+        UserNetworkStorageImpl(
+            gitHubApi = RetrofitApi(GITHUB_BASE_URL, GitHubService::class.java),
+            dailyApi = RetrofitApi(DAILY_BASE_URL, DailyService::class.java)
+        )
     }
 
     single<UserRepository> {
@@ -30,9 +37,5 @@ val dataModule = module {
             userNetworkStorage = get(),
             userDbStorage = get()
         )
-    }
-
-    single<GetUsersUseCase> {
-        GetUsersUseCase(get())
     }
 }
